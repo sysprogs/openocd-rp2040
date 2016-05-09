@@ -7,6 +7,12 @@
 #include <target/algorithm.h>
 #include <target/armv7m.h>
 
+static void report_flash_progress(const char *op, uint64_t region_start, uint64_t region_end, const char *block_name)
+{
+	LOG_INFO("%s:0x%llx|0x%llx|%s", op, region_start, region_end, block_name);
+}
+
+
 // NOTE THAT THIS CODE REQUIRES FLASH ROUTINES in BOOTROM WITH FUNCTION TABLE PTR AT 0x00000010
 // Your gdbinit should load the bootrom.elf if appropriate
 
@@ -178,6 +184,9 @@ static int rp2040_flash_write(struct flash_bank *bank, const uint8_t *buffer, ui
 	}
 
 	LOG_DEBUG("Allocated flash bounce buffer @%08x", (unsigned)bounce->address);
+	
+	if (target->report_flash_progress)
+		LOG_INFO("flash_write_progress_async_start:0x%x", count);
 
 	while (count > 0)
 	{
@@ -202,6 +211,9 @@ static int rp2040_flash_write(struct flash_bank *bank, const uint8_t *buffer, ui
 		buffer += write_size;
 		offset += write_size;
 		count -= write_size;
+		
+		if (target->report_flash_progress)
+			LOG_INFO("flash_write_progress_async:0x%x", offset);
 	}
 	target_free_working_area(target, bounce);
 
@@ -271,6 +283,10 @@ static int rp2040_flash_erase(struct flash_bank *bank, unsigned int first, unsig
 			BLOCK_SIZE,
 			BLOCK_ERASE_CMD
 		};
+		
+		if (bank->target->report_flash_progress)
+			report_flash_progress("flash_erase_progress", bank->base + bank->sectors[first_of_call].offset, bank->base + bank->sectors[last_of_call].offset + bank->sectors[last_of_call].size, bank->name);
+		
 		err = rp2040_call_rom_func(bank->target, priv->stacktop, FUNC_FLASH_RANGE_ERASE, args, 4);
 		if (err != ERROR_OK)
 		{

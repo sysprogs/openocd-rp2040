@@ -199,6 +199,7 @@ struct target {
 										 * and must be detected when symbols are offered */
 	struct backoff_timer backoff;
 	int smp;							/* add some target attributes for smp support */
+    int report_flash_progress;          /* If set to 1, FLASH writing operations will generate detailed progress messages */
 	struct target_list *head;
 	/* the gdb service is there in case of smp, we have only one gdb server
 	 * for all smp target
