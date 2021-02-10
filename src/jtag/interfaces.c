@@ -137,6 +137,9 @@ extern struct adapter_driver bcm2835gpio_adapter_driver;
 #if BUILD_CMSIS_DAP == 1
 extern struct adapter_driver cmsis_dap_adapter_driver;
 #endif
+#if BUILD_PICOPROBE == 1
+extern struct adapter_driver picoprobe_adapter_driver;
+#endif
 #if BUILD_KITPROG == 1
 extern struct adapter_driver kitprog_adapter_driver;
 #endif
@@ -256,6 +259,9 @@ struct adapter_driver *adapter_drivers[] = {
 #endif
 #if BUILD_CMSIS_DAP == 1
 		&cmsis_dap_adapter_driver,
+#endif
+#if BUILD_PICOPROBE == 1
+		&picoprobe_adapter_driver,
 #endif
 #if BUILD_KITPROG == 1
 		&kitprog_adapter_driver,
