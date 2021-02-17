@@ -7,3 +7,12 @@
 [submodule "src/jtag/drivers/libjaylink"]
 	path = src/jtag/drivers/libjaylink
 	url = https://repo.or.cz/libjaylink.git
+[submodule "external/hidapi/source"]
+	path = external/hidapi/source
+	url = https://github.com/signal11/hidapi
+[submodule "external/libusb/source"]
+	path = external/libusb/source
+	url = https://github.com/libusb/libusb
+[submodule "external/libusb1/source"]
+	path = external/libusb1/source
+	url = https://github.com/libusb/libusb
