@@ -11,6 +11,8 @@
 #include "spi.h"
 #include <target/cortex_m.h>
 
+typedef unsigned int uint;
+
 /* this is 'M' 'u', 1 (version) */
 #define BOOTROM_RP2040_MAGIC 0x01754d
 /* this is 'M' 'u', 2 (version) */
