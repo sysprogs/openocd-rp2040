@@ -990,6 +990,7 @@ int target_run_flash_async_algorithm(struct target *target,
 	int timeout = 0;
 
 	const uint8_t *buffer_orig = buffer;
+	uint32_t count_orig = count;
 
 	/* Set up working area. First word is write pointer, second word is read pointer,
 	 * rest is fifo data area. */
@@ -1102,6 +1103,9 @@ int target_run_flash_async_algorithm(struct target *target,
 
 		/* Avoid GDB timeouts */
 		keep_alive();
+		
+		if (target->report_flash_progress)
+			LOG_INFO("FLASH: Programmed %d/%d bytes...", buffer - buffer_orig, block_size * count_orig);
 	}
 
 	if (retval != ERROR_OK) {
@@ -6640,6 +6644,19 @@ nextw:
 	return retval;
 }
 
+COMMAND_HANDLER(handle_report_flash_progress)
+{
+    struct target *target = get_current_target(CMD_CTX);
+    if (CMD_ARGC == 1)
+    {
+        int new_val = 0;
+        COMMAND_PARSE_ON_OFF(CMD_ARGV[0], new_val);
+        target->report_flash_progress = new_val;
+    }
+    command_print(CMD, "FLASH progress reporting is now %s\n", target->report_flash_progress ? "on" : "off");
+    return ERROR_OK;
+}
+
 static const struct command_registration target_exec_command_handlers[] = {
 	{
 		.name = "fast_load_image",
@@ -6911,6 +6928,13 @@ static const struct command_registration target_exec_command_handlers[] = {
 		.mode = COMMAND_EXEC,
 		.help = "Test the target's memory access functions",
 		.usage = "size",
+	},
+	{
+		.name = "report_flash_progress",
+		.handler = handle_report_flash_progress,
+		.mode = COMMAND_EXEC,
+		.help = "Enables/disables reporting FLASH programming progress",
+		.usage = "[on/off]",
 	},
 
 	COMMAND_REGISTRATION_DONE

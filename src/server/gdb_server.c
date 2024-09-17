@@ -3341,6 +3341,11 @@ static int gdb_v_packet(struct connection *connection,
 		target_call_event_callbacks(target,
 			TARGET_EVENT_GDB_FLASH_ERASE_START);
 
+		if (get_target_from_connection(connection)->report_flash_progress)
+		{
+			LOG_INFO("Erasing FLASH: 0x%08x-0x%08x...", (uint32_t)addr, (uint32_t)(addr + length));
+		}
+
 		/* vFlashErase:addr,length messages require region start and
 		 * end to be "block" aligned ... if padding is ever needed,
 		 * GDB will have become dangerously confused.
