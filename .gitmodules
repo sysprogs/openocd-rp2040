@@ -4,3 +4,9 @@
 [submodule "src/jtag/drivers/libjaylink"]
 	path = src/jtag/drivers/libjaylink
 	url = https://gitlab.zapb.de/libjaylink/libjaylink.git
+[submodule "external/libusb1/source"]
+	path = external/libusb1/source
+	url = https://github.com/libusb/libusb
+[submodule "external/hidapi/source"]
+	path = external/hidapi/source
+	url = https://github.com/signal11/hidapi

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ArrayOfTargetDeviceFamily xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<TargetDeviceFamily>
+		<ID>RP2040</ID>
+		<Name>Raspberry Pi Pico (RP2040)</Name>
+		<MatchRegex>^RP2040.*</MatchRegex>
+		<ScriptFile>target/rp2040.cfg</ScriptFile>
+		<SuggestedTransport>swd</SuggestedTransport>
+	</TargetDeviceFamily>
+	<TargetDeviceFamily>
+		<ID>RP2350</ID>
+		<Name>Raspberry Pi Pico 2 (RP2350)</Name>
+		<MatchRegex>^RP2350$</MatchRegex>
+		<ScriptFile>target/rp2350.cfg</ScriptFile>
+		<SuggestedTransport>swd</SuggestedTransport>
+	</TargetDeviceFamily>
+	<TargetDeviceFamily>
+		<ID>RP2350_RISCV</ID>
+		<Name>Raspberry Pi Pico 2 (RP2350) [RISC-V]</Name>
+		<MatchRegex>^RP2350_RISCV.*</MatchRegex>
+		<ScriptFile>target/rp2350-riscv.cfg</ScriptFile>
+		<SuggestedTransport>swd</SuggestedTransport>
+	</TargetDeviceFamily>
+</ArrayOfTargetDeviceFamily>
